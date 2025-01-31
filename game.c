@@ -24,7 +24,7 @@ typedef struct
     //int cur_color;
 } Game;
 
-point random_point(Room);
+void handle_input(Game *, int);
 void handle_movement(Game *, int);
 point destination(int, int, int);
 void move_hero(Game *, point);
@@ -39,6 +39,8 @@ void new_room(Game *, point);
 void new_corr(Game *, point);
 int find_room(Game, point);
 int find_corr(Game *, point);
+void change_level(Game *);
+int on_stair(Game *);
 
 int main()
 {
@@ -54,7 +56,7 @@ int main()
     game.cur_room = rand() % 6;
 
     create_levels(game.level, game.cur_room);
-    point tmp = random_point(game.level[game.cur_level].map.room[game.cur_room]);
+    point tmp = random_point(game.level[game.cur_level].map.room[game.cur_room], 1);
     game.hero.x = tmp.x;
     game.hero.y = tmp.y;
     reveal_room(&game);
@@ -66,11 +68,38 @@ int main()
         int ch = getch();
         if(ch == 10)
             break;
-        handle_movement(&game, ch);
+        handle_input(&game, ch);
         clear();
     }
 
     endwin();
+    return 0;
+}
+
+void handle_input(Game *game, int ch)
+{
+    if(ch == 32)
+        change_level(game);
+    else
+        handle_movement(game, ch);
+}
+
+void change_level(Game *game)
+{
+    int st = on_stair(game);
+    game->cur_level += st;
+    reveal_room(game);
+}
+
+int on_stair(Game *game)
+{
+    Room rm = game->level[game->cur_level].map.room[game->cur_room];
+    int r = game->hero.x - rm.corner.x;
+    int c = game->hero.y - rm.corner.y;
+    if(rm.floor[r][c].contain == '<')
+        return 1;
+    if(rm.floor[r][c].contain == '>')
+        return -1;
     return 0;
 }
 
@@ -206,6 +235,10 @@ int inside_room(Game game, point pnt)
     int c = pnt.y - game.level[game.cur_level].map.room[game.cur_room].corner.y;
     if(game.level[game.cur_level].map.room[game.cur_room].floor[r][c].contain == '.')
         return 1;
+    if(game.level[game.cur_level].map.room[game.cur_room].floor[r][c].contain == '<')
+        return 1;
+    if(game.level[game.cur_level].map.room[game.cur_room].floor[r][c].contain == '>')
+        return 1;
     return 0;
 }
 
@@ -261,18 +294,6 @@ void draw_hero(Game game)
     Charachter ch = game.hero;
     move(ch.x, ch.y);
     printw("@");
-}
-
-point random_point(Room room)
-{
-    int r = rand() % (room.height - 2) + 1;
-    int c = rand() % (room.width - 2) + 1;
-    r += room.corner.x;
-    c += room.corner.y;
-    point res;
-    res.x = r;
-    res.y = c;
-    return res;
 }
 
 point destination(int r, int c, int ch)

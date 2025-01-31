@@ -48,6 +48,8 @@ int absolute(int);
 int contain_stair(Room, point);
 int check_conflict(Corridor *, int, int);
 int conflict(Corridor *, int *, int );
+void build_pillar(Room *, int);
+point random_point(Room, int);
 
 void build_room(Room *room, int r)
 {
@@ -118,7 +120,10 @@ void create_room(Room *room, int m, point stair)
     }
 
     for(int r = 0; r < 6; r++)
+    {
         build_room(room, r);
+        build_pillar(room, r);
+    }
 }
 
 void build_corridor(Room *room, Corridor *corridor, int *is, int i)
@@ -256,6 +261,18 @@ void create_corridor(Room *room, Corridor *corridor, int *is)
             build_corridor(room, corridor, is, i);
 }
 
+void build_pillar(Room *room, int k)
+{
+    int cnt = rand() % 3;
+    for(int i = 0; i < cnt; i++)
+    {
+        point tmp = random_point(room[k], 2);
+        tmp.x -= room[k].corner.x;
+        tmp.y -= room[k].corner.y;
+        room[k].floor[tmp.x][tmp.y].contain = 'O';
+    }
+}
+
 void draw(Map map)
 {
     Room *room = map.room;
@@ -277,14 +294,6 @@ void draw(Map map)
     for(int i = 0; i < 7; i++)
         if(is[i])
         {
-            /*
-            move(corridor[i].start.x, corridor[i].start.y);
-            printw("%c", corridor[i].start.contain);
-
-            move(corridor[i].end.x, corridor[i].end.y);
-            printw("%c", corridor[i].end.contain);
-            */
-
             for(int j = 0; j < corridor[i].length; j++)
             {
                 move(corridor[i].trail[j].x, corridor[i].trail[j].y);
@@ -326,4 +335,16 @@ int conflict(Corridor *corridor, int *is, int c)
         if(is[i] && check_conflict(corridor, c, i))
             return 1;
     return 0;
+}
+
+point random_point(Room room, int d)
+{
+    int r = rand() % (room.height - 2 * d) + d;
+    int c = rand() % (room.width - 2 * d) + d;
+    r += room.corner.x;
+    c += room.corner.y;
+    point res;
+    res.x = r;
+    res.y = c;
+    return res;
 }
