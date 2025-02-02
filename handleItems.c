@@ -53,23 +53,15 @@ void capture_item(Game *game)
         {
            game->level[game->cur_level].gold[i].used = 1;
            game->score += game->level[game->cur_level].gold[i].value;
-           game->message = ADD_GOLD;
         }
 
     for(int i = 0; i < 5; i++)
         if(game->level[game->cur_level].food[i].x == r &&
            game->level[game->cur_level].food[i].y == c)
-        {
-            if(game->food_save < 5)
+           if(game->food_save < 5)
             {
                 set_food(&game->level[game->cur_level], i);
                 game->food_save++;
-                game->message = ADD_FOOD;
             }
-            else
-            {
-                game->message = FOOD_CAPACITY;
-            }
-        }
 }
 

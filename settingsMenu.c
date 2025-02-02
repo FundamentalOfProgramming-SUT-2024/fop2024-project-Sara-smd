@@ -1,6 +1,6 @@
 #include "mybasics.h"
 
-Sett settings_menu()
+void settings_menu()
 {
     const char *colors[] = {"Red", "Green", "Blue"};
     const char *difficult[] = {"Easy", "Medium", "Hard"};
@@ -11,8 +11,10 @@ Sett settings_menu()
     {
         mvprintw(LINES / 3, 2 * COLS / 5 + 8, "Settings");
         mvprintw(LINES / 3 + 3, 2 * COLS / 5, "Color : ");
-        mvprintw(LINES / 3 + 5, 2 * COLS / 5, "Difficulty : ");
+        attron(A_REVERSE);
         mvprintw(LINES / 3 + 3, 2 * COLS / 5 + 17, "%s", colors[clr]);
+        attroff(A_REVERSE);
+        mvprintw(LINES / 3 + 5, 2 * COLS / 5, "Difficulty : ");
         mvprintw(LINES / 3 + 5, 2 * COLS / 5 + 17, "%s", difficult[dif]);
 
         int ch = getch();
@@ -29,9 +31,11 @@ Sett settings_menu()
     {
         mvprintw(LINES / 3, 2 * COLS / 5 + 8, "Settings");
         mvprintw(LINES / 3 + 3, 2 * COLS / 5, "Color : ");
-        mvprintw(LINES / 3 + 5, 2 * COLS / 5, "Difficulty : ");
         mvprintw(LINES / 3 + 3, 2 * COLS / 5 + 17, "%s", colors[clr]);
+        mvprintw(LINES / 3 + 5, 2 * COLS / 5, "Difficulty : ");
+        attron(A_REVERSE);
         mvprintw(LINES / 3 + 5, 2 * COLS / 5 + 17, "%s", difficult[dif]);
+        attroff(A_REVERSE);
 
         int ch = getch();
         if(ch == 10)
@@ -44,8 +48,4 @@ Sett settings_menu()
     }
 
     clear();
-    Sett res;
-    res.color = clr;
-    res.difficulty = dif;
-    return res;
 }

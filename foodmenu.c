@@ -20,9 +20,6 @@ void show_food_menu(Game *game)
         mvprintw(LINES / 5 + 2, 2 * COLS / 5 + 8, "Food Menu");
         mvprintw(LINES / 5 + 5, 2 * COLS / 5 + 2, "normal food");
         mvprintw(LINES / 5 + 5, 2 * COLS / 5 + 22, "%d", game->food_save);
-        mvprintw(4 * LINES / 5 - 3, 2 * COLS / 5 + 5, "press enter to");
-        mvprintw(4 * LINES / 5 - 2, 2 * COLS / 5 + 5, "resume the game");
-
         int ch = getch();
         if(ch == 10)
             break;
@@ -36,7 +33,5 @@ void show_food_menu(Game *game)
         }
     }
     clear();
-    game->last_check = time(NULL);
-    game->last_update = time(NULL);
     return;
 }

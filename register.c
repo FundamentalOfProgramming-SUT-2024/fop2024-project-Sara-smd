@@ -1,9 +1,4 @@
-#include<time.h>
-#include<stdlib.h>
-#include<string.h>
-#include<unistd.h>
-#include<ncurses.h>
-#include"mypregame.h"
+#include "mybasics.h"
 
 void init_game();
 void IntroPage();
@@ -11,7 +6,7 @@ void LoginMode();
 void LoginPage();
 void GuestLogin();
 void RegisterPage();
-void SaveUser(char*, char*, char*, const char *);
+void SaveUser(char*, char*, char*);
 int check(char*, char*);
 int check_email(char*);
 int check_password(char*);
@@ -115,10 +110,10 @@ void LoginPage()
         mvprintw(LINES / 2 - 2, COLS / 2 - 14, "press any key to continue...");
         char c = getch();
         clear();
-        char *name = (char*)malloc(60 * sizeof(char));
-        strcpy(name, username);
-        strcat(name, ".txt");
-        PreGame(name);
+//        char *name = (char*)malloc(60 * sizeof(char));
+//        strcpy(name, username);
+//        strcat(name, ".txt");
+        PreGame();
         return;
     }
     else
@@ -142,7 +137,7 @@ void GuestLogin()
     mvprintw(LINES / 2 - 2, COLS / 2 - 14, "press any key to continue...");
     char c = getch();
     clear();
-    PreGame("Guest.txt");
+    PreGame();
     return;
 }
 
@@ -198,10 +193,10 @@ void RegisterPage()
         RegisterPage();
         return;
     }
-    char *name = (char*)malloc(60 * sizeof(char));
-    strcpy(name, username);
-    strcat(name, ".txt");
-    SaveUser(username, password, email, name);
+//    char *name = (char*)malloc(60 * sizeof(char));
+//    strcpy(name, username);
+//    strcat(name, ".txt");
+    SaveUser(username, password, email);
     clear();
     attron(A_BOLD);
     mvprintw(LINES / 2 - 4, COLS / 2 - 12, "Registered Successfully!");
@@ -209,11 +204,11 @@ void RegisterPage()
     mvprintw(LINES / 2 - 2, COLS / 2 - 14, "press any key to continue...");
     char c = getch();
     clear();
-    PreGame(name);
+    PreGame();
     return;
 }
 
-void SaveUser(char* Username, char* Password, char* Email, const char *NAME)
+void SaveUser(char* Username, char* Password, char* Email)
 {
     FILE* frtp;
     frtp = fopen("number.txt", "r");
@@ -226,10 +221,6 @@ void SaveUser(char* Username, char* Password, char* Email, const char *NAME)
     FILE* fptr;
     fptr = fopen("text.txt", "a");
     fprintf(fptr, "%s %s %s\n", Username, Password, Email);
-
-    FILE *nptr;
-    nptr = fopen(NAME, "w");
-    fprintf(nptr, "%d\n", 0);
 }
 
 int check_username(char* Username)

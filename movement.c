@@ -4,8 +4,6 @@ void change_level(Game *game)
 {
     int st = on_stair(game);
     game->cur_level += st;
-    if(st != 0)
-        game-> message = NEW_LEVEL;
     reveal_room(game);
 }
 
@@ -32,7 +30,6 @@ void handle_movement(Game *game, int ch)
             game->on_door = 0;
             game->cur_corr = -1;
             move_hero(game, dst);
-            game->message = NEW_ROOM;
         }
         else if(inside_corr(game, dst))
         {
