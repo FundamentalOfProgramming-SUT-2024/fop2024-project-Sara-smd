@@ -1,6 +1,6 @@
 #include "mybasics.h"
 
-void settings_menu()
+Sett settings_menu()
 {
     const char *colors[] = {"Red", "Green", "Blue"};
     const char *difficult[] = {"Easy", "Medium", "Hard"};
@@ -11,10 +11,10 @@ void settings_menu()
     {
         mvprintw(LINES / 3, 2 * COLS / 5 + 8, "Settings");
         mvprintw(LINES / 3 + 3, 2 * COLS / 5, "Color : ");
+        mvprintw(LINES / 3 + 5, 2 * COLS / 5, "Difficulty : ");
         attron(A_REVERSE);
         mvprintw(LINES / 3 + 3, 2 * COLS / 5 + 17, "%s", colors[clr]);
         attroff(A_REVERSE);
-        mvprintw(LINES / 3 + 5, 2 * COLS / 5, "Difficulty : ");
         mvprintw(LINES / 3 + 5, 2 * COLS / 5 + 17, "%s", difficult[dif]);
 
         int ch = getch();
@@ -24,6 +24,7 @@ void settings_menu()
             clr = (clr + 2) % 3;
         if(ch == KEY_DOWN)
             clr = (clr + 1) % 3;
+        usleep(DELAY);
         clear();
     }
 
@@ -31,8 +32,8 @@ void settings_menu()
     {
         mvprintw(LINES / 3, 2 * COLS / 5 + 8, "Settings");
         mvprintw(LINES / 3 + 3, 2 * COLS / 5, "Color : ");
-        mvprintw(LINES / 3 + 3, 2 * COLS / 5 + 17, "%s", colors[clr]);
         mvprintw(LINES / 3 + 5, 2 * COLS / 5, "Difficulty : ");
+        mvprintw(LINES / 3 + 3, 2 * COLS / 5 + 17, "%s", colors[clr]);
         attron(A_REVERSE);
         mvprintw(LINES / 3 + 5, 2 * COLS / 5 + 17, "%s", difficult[dif]);
         attroff(A_REVERSE);
@@ -44,8 +45,13 @@ void settings_menu()
             dif = (dif + 2) % 3;
         if(ch == KEY_DOWN)
             dif = (dif + 1) % 3;
+        usleep(DELAY);
         clear();
     }
 
     clear();
+    Sett res;
+    res.color = clr;
+    res.difficulty = dif;
+    return res;
 }

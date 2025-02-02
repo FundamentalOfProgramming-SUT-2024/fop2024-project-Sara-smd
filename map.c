@@ -45,7 +45,7 @@ void build_room(Room *room, int r)
         }
 }
 
-void create_room(Room *room, int m, point stair)///checked!
+void create_room(Room *room, int m, point stair)
 {
     int row[] = {4, 16};
     int clm[] = {4, 44, 84};

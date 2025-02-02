@@ -65,6 +65,12 @@ typedef struct
 
 typedef struct
 {
+    int color;
+    int difficulty;
+} Sett;
+
+typedef struct
+{
     Map map;
     int cnt_gold;
     Gold gold[10];
@@ -87,12 +93,15 @@ typedef struct
     int cur_room;
     int cur_corr;
     int cur_level;
+    Sett settings;
     int score;
     int health;
     int hunger;
     int food_save;
     time_t last_update;
     time_t last_check;
+    time_t last_message;
+    char *message;
 } Game;
 #endif // BASICS
 
@@ -120,6 +129,19 @@ int conflict(Corridor *, int *, int );
 
 #endif // MAP
 
+#ifndef MESSAGE
+#define MESSAGE
+
+#define DELAY 100000
+#define DEFAULT_MESSAGE "                          "
+#define FOOD_CAPACITY "Not enough capacity!"
+#define NEW_LEVEL "You entered a new level!"
+#define NEW_ROOM "You entered a new room!"
+#define ADD_GOLD "Added to your score!"
+#define ADD_FOOD "Added to the food menu!"
+
+#endif // MESSAGE
+
 #ifndef DRAW
 #define DRAW
 void draw(Game *, int);
@@ -128,8 +150,11 @@ void draw_gold(Room *, int, Gold *, int);
 void draw_food(Room *, Food *, int);
 void draw_health(Game *);
 void draw_score(Game);
+void draw_level(Game);
 
 void show_food_menu(Game *);
+
+void draw_message();
 
 #endif // DRAW
 
@@ -171,15 +196,15 @@ void capture_item(Game *);
 
 #endif // HANDLE_ITEMS
 
-#ifndef NEW_GAME
-#define NEW_GAME
-void new_game();
+#ifndef SETTINGS
+#define SETTINGS
+Sett settings_menu();
 
-#endif // NEW_GAME
+#endif // SETTINGS
 
-#ifndef SETTINGS_MENU
-#define SETTINGS_MENU
-void settings_menu();
+#ifndef NEWGAME
+#define NEWGAME
+void new_game(Sett);
 void PreGame();
 
-#endif // SETTINGS_MENU
+#endif // NEWGAME

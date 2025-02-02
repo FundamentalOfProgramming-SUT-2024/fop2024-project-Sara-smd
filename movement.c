@@ -4,6 +4,8 @@ void change_level(Game *game)
 {
     int st = on_stair(game);
     game->cur_level += st;
+    if(st != 0)
+        game-> message = NEW_LEVEL;
     reveal_room(game);
 }
 
@@ -30,6 +32,7 @@ void handle_movement(Game *game, int ch)
             game->on_door = 0;
             game->cur_corr = -1;
             move_hero(game, dst);
+            game->message = NEW_ROOM;
         }
         else if(inside_corr(game, dst))
         {
@@ -156,6 +159,8 @@ int inside_room(Game game, point pnt)
         return 1;
     if(ch == '*')
         return 1;
+    if(ch == 'T')
+        return 1;
     return 0;
 }
 
@@ -188,10 +193,9 @@ int inside_corr(Game *game, point pnt)
 
 void reveal_room(Game* game)
 {
-    Room *rm = game->level[game->cur_level].map.room;
-    for(int i = 0; i < rm[game->cur_room].height; i++)
-        for(int j = 0; j < rm[game->cur_room].width; j++)
-            rm[game->cur_room].floor[i][j].visible = 1;
+    for(int i = 0; i < game->level[game->cur_level].map.room[game->cur_room].height; i++)
+        for(int j = 0; j < game->level[game->cur_level].map.room[game->cur_room].width; j++)
+            game->level[game->cur_level].map.room[game->cur_room].floor[i][j].visible = 1;
 }
 
 void reveal_corr(Game *game, int i)

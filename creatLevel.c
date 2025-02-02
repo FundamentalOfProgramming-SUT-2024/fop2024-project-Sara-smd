@@ -70,6 +70,12 @@ void change_stair(Level *level)
             int c = level[i].map.staircase.y - level[i].map.room[level[i].map.trans].corner.y;
             level[i].map.room[level[i].map.trans].floor[r][c].contain = '<';
         }
+        if(i == 3)
+        {
+            int r = level[i].map.staircase.x - level[i].map.room[level[i].map.trans].corner.x;
+            int c = level[i].map.staircase.y - level[i].map.room[level[i].map.trans].corner.y;
+            level[i].map.room[level[i].map.trans].floor[r][c].contain = 'T';
+        }
     }
 }
 

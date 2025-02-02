@@ -1,5 +1,4 @@
 #include "mybasics.h"
-
 void init_game();
 void IntroPage();
 void LoginMode();
@@ -221,6 +220,10 @@ void SaveUser(char* Username, char* Password, char* Email)
     FILE* fptr;
     fptr = fopen("text.txt", "a");
     fprintf(fptr, "%s %s %s\n", Username, Password, Email);
+
+//    FILE *nptr;
+//    nptr = fopen(NAME, "w");
+//    fprintf(nptr, "%d\n", 0);
 }
 
 int check_username(char* Username)
