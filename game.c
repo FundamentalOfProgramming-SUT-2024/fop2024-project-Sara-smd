@@ -14,7 +14,7 @@ int main()
     game.cur_corr = -1;
     game.on_door = 0;
     game.cur_room = rand() % 6;
-    game.last_check - time(NULL);
+    game.last_check = time(NULL);
     game.last_update = time(NULL);
     game.health = 12;
     game.hunger = 0;

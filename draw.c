@@ -71,7 +71,8 @@ void draw_food(Room *room, Food *food, int sh)
 
 void draw_score(Game game)
 {
-    mvprintw(28, 100, "score: %d", game.score);
+    mvprintw(1, 75, "score: %d", game.score);
+    mvprintw(3, 75, "level: %d", game.cur_level);
 }
 
 void draw_health(Game *game)
@@ -83,15 +84,17 @@ void draw_health(Game *game)
     for(int i = 0; i < game->hunger; i++)
         printw("#");
 
-    int dist = 2;
+    int update = 5;
+    int check = 3;
     time_t now = time(NULL);
-    if(now - game->last_update > dist)
+    if(now - game->last_update > update)
     {
-        game->hunger++;
+        if(game->hunger < 12)
+            game->hunger++;
         game->last_update = now;
     }
 
-    if(now - game->last_check > dist)
+    if(now - game->last_check > check)
     {
         if(game->hunger < 3)
             game->health++;
@@ -101,6 +104,11 @@ void draw_health(Game *game)
             game->health--;
         else
             game->health -= 2;
+
+        if(game->health > 12)
+            game->health = 12;
+        if(game->health < 0)
+            game->health = 0;
         game->last_check = now;
     }
 }

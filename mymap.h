@@ -3,7 +3,8 @@
 #include<string.h>
 #include<unistd.h>
 #include<ncurses.h>
-
+#ifndef POINT
+#define POINT
 typedef struct
 {
     int x;
@@ -348,3 +349,4 @@ point random_point(Room room, int d)
     res.y = c;
     return res;
 }
+#endif // POINT
