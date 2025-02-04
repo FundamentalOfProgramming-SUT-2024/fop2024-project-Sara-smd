@@ -213,8 +213,10 @@ void move_hero(Game *game, point pnt)
 void draw_hero(Game game)
 {
     Charachter ch = game.hero;
+    attron(COLOR_PAIR(game.settings.color + 1));
     move(ch.x, ch.y);
     printw("@");
+    attroff(COLOR_PAIR(game.settings.color + 1));
 }
 
 point destination(int r, int c, int ch)

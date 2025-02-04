@@ -21,9 +21,15 @@ void set_gold(Level *level)
         level->gold[i].used = 0;
         int rn = rand() % 10;
         if(rn == 0)
+        {
             level->gold[i].value = 3;
+            level->gold[i].color = 5;
+        }
         else
+        {
             level->gold[i].value = 1;
+            level->gold[i].color = 4;
+        }
     }
 }
 

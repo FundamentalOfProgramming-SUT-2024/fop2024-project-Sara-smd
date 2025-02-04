@@ -1,7 +1,10 @@
 #include "mybasics.h"
 
+void make_colors();
+
 void draw(Game *game, int sh)
 {
+    make_colors();
     draw_map(game->level[game->cur_level].map, sh);
     draw_gold(game->level[game->cur_level].map.room, game->level[game->cur_level].cnt_gold, game->level[game->cur_level].gold, sh);
     draw_food(game->level[game->cur_level].map.room, game->level[game->cur_level].food, sh);
@@ -10,6 +13,18 @@ void draw(Game *game, int sh)
     draw_level(*game);
     draw_hero(*game);
     draw_message(game);
+}
+
+void make_colors()
+{
+    init_color(3, 0, 0, 900);
+    init_color(4, 700, 700, 0);
+    init_color(5, 900, 600, 0);
+    init_pair(1, COLOR_RED, COLOR_BLACK);
+    init_pair(2, COLOR_GREEN, COLOR_BLACK);
+    init_pair(3, 3, COLOR_BLACK);
+    init_pair(4, 4, COLOR_BLACK);
+    init_pair(5, 5, COLOR_BLACK);
 }
 
 void draw_map(Map map, int sh)
@@ -48,8 +63,10 @@ void draw_gold(Room *room, int n, Gold *gold, int sh)
         int c = gold[i].y - room[gold[i].place].corner.y;
         if(gold[i].used == 0 && (room[gold[i].place].floor[r][c].visible || sh))
         {
+            attron(COLOR_PAIR(gold[i].color));
             move(gold[i].x, gold[i].y);
             printw("*");
+            attroff(COLOR_PAIR(gold[i].color));
         }
     }
 }
