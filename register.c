@@ -109,9 +109,6 @@ void LoginPage()
         mvprintw(LINES / 2 - 2, COLS / 2 - 14, "press any key to continue...");
         char c = getch();
         clear();
-//        char *name = (char*)malloc(60 * sizeof(char));
-//        strcpy(name, username);
-//        strcat(name, ".txt");
         PreGame();
         return;
     }
@@ -192,9 +189,6 @@ void RegisterPage()
         RegisterPage();
         return;
     }
-//    char *name = (char*)malloc(60 * sizeof(char));
-//    strcpy(name, username);
-//    strcat(name, ".txt");
     SaveUser(username, password, email);
     clear();
     attron(A_BOLD);
@@ -220,10 +214,6 @@ void SaveUser(char* Username, char* Password, char* Email)
     FILE* fptr;
     fptr = fopen("text.txt", "a");
     fprintf(fptr, "%s %s %s\n", Username, Password, Email);
-
-//    FILE *nptr;
-//    nptr = fopen(NAME, "w");
-//    fprintf(nptr, "%d\n", 0);
 }
 
 int check_username(char* Username)

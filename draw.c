@@ -14,9 +14,6 @@ void draw(Game *game, int sh)
 
 void draw_map(Map map, int sh)
 {
-    //Room *room = map.room;
-    //Corridor *corridor = map.corridor;
-    //int *is = map.is;
     for(int r = 0; r < 6; r++)
     {
         for(int i = 0; i < map.room[r].height; i++)
@@ -93,11 +90,6 @@ void draw_health(Game *game)
     int update = 10 - 3 * game->settings.difficulty;
     int check = 5 - game->settings.difficulty;
     time_t now = time(NULL);
-//    mvprintw(1, 50, "%ld", now);
-//    mvprintw(2, 50, "%ld", game->last_check);
-//    mvprintw(3, 50, "%ld", game->last_update);
-//    mvprintw(2, 60, "%d", check);
-//    mvprintw(3, 60, "%d", update);
     if(now - game->last_update > update)
     {
         if(game->hunger < 12)

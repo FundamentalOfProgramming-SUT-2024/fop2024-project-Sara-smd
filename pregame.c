@@ -3,7 +3,7 @@
 void PreGame()
 {
     noecho();
-    //curs_set(false);
+    curs_set(false);
     const char *option[] = {"New Game", "Resume Game", "Settings", "Scoreboard"};
     int choice = 0;
     Sett st;
